@@ -1,0 +1,57 @@
+{
+  "menu": [{
+    "url": "/contacts",
+    "name": "Contacts",
+    "icon": "menu-icon tf-icons bx bx-user",
+    "slug": "Contacts"
+  },
+  {
+    "url": "/sanction",
+    "name": "Sanction",
+    "icon": "menu-icon tf-icons bx bx-receipt",
+    "slug": "Sanction"
+  },
+  {
+    "url": "/disbursements",
+    "name": "Disbursement",
+    "icon": "menu-icon tf-icons bx bx-task",
+    "slug": "Disbursement"
+  },
+  {
+    "name": "Setting",
+    "icon": "menu-icon tf-icons bx bx-cog",
+    "slug": "setting",
+    "submenu": [
+      {
+        "url": "/users",
+        "name": "manage user",
+        "slug": "manage user"
+      },
+      {
+        "url": "/roles",
+        "name": "Manage Roles",
+        "slug": "Manage Roles"
+      },
+      {
+        "url": "/permissions",
+        "name": "manage Permissions",
+        "slug": "manage Permissions"
+      },
+      {
+        "url": "/addbank",
+        "name": "Manage Bank",
+        "slug": "Manage Bank"
+      },
+      {
+        "url": "/data-share",
+        "name": "manage Groups",
+        "slug": "manage Groups"
+      },
+      {
+        "url": "/manage_members",
+        "name": "manage Sharing Rules",
+        "slug": "manage Sharing Rules"
+      }
+    ]
+  }]
+}

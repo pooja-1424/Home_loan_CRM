@@ -1,0 +1,10 @@
+.container{
+    background-color: white!important;
+}
+.row.alignb {
+    /* margin-bottom: 10; */
+    padding-top: 25px;
+    border-radius: 13px;
+    padding-bottom: 25px;
+    border: 1px solid #aaa;
+  }
