@@ -15,7 +15,7 @@ class BankPayoutController extends Controller
     public function index()
     {
         //
-        $bankdata=BankPayout::all();
+        $bankdata=BankPayout::orderBy('payout_id','DESC')->paginate(10);
         // dd($bankdata);
         return view('content.payout_structure.index',compact('bankdata'));
     }
@@ -172,9 +172,8 @@ class BankPayoutController extends Controller
                 }
             
                 return $convertedAmount;
-            }     
-                     
-           /*for type of condition*/           
+            }                
+            /*for type of condition*/           
             $selectedConditions = $request->input('condition', []);
             if (!in_array('cutout_statement', $selectedConditions)) 
             {
@@ -189,45 +188,30 @@ class BankPayoutController extends Controller
                 unset($data['remark']);
             }            
             $bank_payout_structure->type_of_condition = json_encode($selectedConditions);            
-           
+         
+            /*for rate*/           
             $rateArray = [
-                $cutoutRate =in_array('cutout_statement', $selectedConditions) ? $cutoutRates : 0,
-                $extraRate = in_array('extra_payout', $selectedConditions) ? $extraRates : 0,
-                $remarkRate = in_array('remark', $selectedConditions) ? $remarkRates : 0,
-            ];    
-            if ($cutoutRates == []) {               
-                $rateArray = [
-                     0,
-                    $extraRates,
-                     0,
-                ];
-            }
-            elseif($remarkRate == []) 
-            {               
-                $rateArray = [
-                    $cutoutRates,
-                    $extraRates,
-                     0,
-                ];
-            }
-            else
-            {
-                $rateArray = [
-                    $cutoutRate =in_array('cutout_statement', $selectedConditions) ? $cutoutRates : 0,
-                    $extraRates = in_array('extra_payout', $selectedConditions) ? $extraRates : 0,
-                    $remarkRates = in_array('remark', $selectedConditions) ? $remarkRates : 0,
-                ];  
-            }
-             
-            $bank_payout_structure->rate = json_encode($rateArray);
-            
+                        $cutoutRate =in_array('cutout_statement', $selectedConditions) ? $cutoutRates : 0,
+                        $extraRate = in_array('extra_payout', $selectedConditions) ? $extraRates : 0,
+                        $remarkRate = in_array('remark', $selectedConditions) ? $remarkRates : 0,
+                    ];  
+                    if (empty($cutoutRates)) {
+                        $rateArray[0] = 0;
+                    }
+                    if (empty($extraRates)) {
+                        $rateArray[1] = 0;
+                    }
+                    if (empty($remarkRates)) {
+                        $rateArray[2] = 0;
+                    }                            
+            $bank_payout_structure->rate = json_encode($rateArray); 
+
             /*for Amount */
             $bank_payout_structure->amount = json_encode([
                 in_array('cutout_statement', $selectedConditions) ? convertToNumber($cutoutAmount, $cutoutExtension) : 0,
                 in_array('extra_payout', $selectedConditions) ? convertToNumber($extraAmount, $extraExtension) : 0,
                 in_array('remark', $selectedConditions) ? convertToNumber($remarkAmount, $remarkExtension) : 0,
-            ]);            
-                
+            ]);   
             // Save the data to the database
             $client=BankPayout::create($data);                       
             $client->bank_payout_structure()->save($bank_payout_structure);    
@@ -472,8 +456,7 @@ class BankPayoutController extends Controller
             $bankpayout->bank_payout_structure()->save($bank_payout_structure);
  
     return redirect()->route('payouts.index')->with('success', 'Updated Successfully');
-}   
-      
+}       
     /**
      * Remove the specified resource from storage.
      *
@@ -485,3 +468,4 @@ class BankPayoutController extends Controller
         //
     }
 }
+

@@ -109,13 +109,10 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
-                            
+                            <tbody class="table-border-bottom-0">                            
                                 @php
-                                    $i = 0;
-                                   
+                                    $i = 0;                                   
                                 @endphp
-
                                 @if (isset($sanctionData))
                                 @forelse ($sanctionData as $Sanction)
                                 @php
@@ -171,9 +168,6 @@
             </div>
         </div>
     </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript">
-       
-        </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>  
 @endsection
 

@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
   public function register()
   {
     //
+    $this->app->bind(DataStorageService::class, function ($app) {
+      return new DataStorageService();
+  });
   }
 
   /**

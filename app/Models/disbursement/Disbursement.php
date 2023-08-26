@@ -36,4 +36,5 @@ class Disbursement extends Model
        {
            return $this->belongsTo('App\models\sanction\Sanction','sanction_id');
        }
+       
 }

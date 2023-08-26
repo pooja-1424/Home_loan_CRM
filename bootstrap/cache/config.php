@@ -2,15 +2,15 @@
   'app' => 
   array (
     'name' => 'Laravel',
-    'env' => 'local',
-    'debug' => true,
+    'env' => 'production',
+    'debug' => false,
     'url' => 'http://localhost',
-    'asset_url' => '',
+    'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:zdryXVO6SyXFD8jyavzySftJl1zhqWlYe71xxvR5HZ0=',
+    'key' => NULL,
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -36,12 +36,14 @@
       19 => 'Illuminate\\Translation\\TranslationServiceProvider',
       20 => 'Illuminate\\Validation\\ValidationServiceProvider',
       21 => 'Illuminate\\View\\ViewServiceProvider',
-      22 => 'App\\Providers\\AppServiceProvider',
-      23 => 'App\\Providers\\AuthServiceProvider',
-      24 => 'App\\Providers\\EventServiceProvider',
-      25 => 'App\\Providers\\RouteServiceProvider',
-      26 => 'App\\Providers\\MenuServiceProvider',
-      27 => 'Spatie\\Permission\\PermissionServiceProvider',
+      22 => 'App\\Providers\\MenuServiceProvider',
+      23 => 'App\\Providers\\AppServiceProvider',
+      24 => 'App\\Providers\\AuthServiceProvider',
+      25 => 'App\\Providers\\MyServiceProvider',
+      26 => 'App\\Providers\\EventServiceProvider',
+      27 => 'App\\Providers\\RouteServiceProvider',
+      28 => 'App\\Providers\\MenuServiceProvider',
+      29 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
     'aliases' => 
     array (
@@ -143,18 +145,18 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'log',
+    'default' => 'null',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => NULL,
+        'secret' => NULL,
+        'app_id' => NULL,
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => NULL,
           'useTLS' => true,
         ),
         'client_options' => 
@@ -205,7 +207,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -238,8 +240,8 @@
       'dynamodb' => 
       array (
         'driver' => 'dynamodb',
-        'key' => '',
-        'secret' => '',
+        'key' => NULL,
+        'secret' => NULL,
         'region' => 'us-east-1',
         'table' => 'cache',
         'endpoint' => NULL,
@@ -288,7 +290,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'horizonf_homeloan',
+        'database' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\database\\database.sqlite',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -297,9 +299,9 @@
         'driver' => 'mysql',
         'url' => NULL,
         'host' => '127.0.0.1',
-        'port' => '3307',
-        'database' => 'horizonf_homeloan',
-        'username' => 'root',
+        'port' => '3306',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
@@ -317,9 +319,9 @@
         'driver' => 'pgsql',
         'url' => NULL,
         'host' => '127.0.0.1',
-        'port' => '3307',
-        'database' => 'horizonf_homeloan',
-        'username' => 'root',
+        'port' => '5432',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
@@ -331,10 +333,10 @@
       array (
         'driver' => 'sqlsrv',
         'url' => NULL,
-        'host' => '127.0.0.1',
-        'port' => '3307',
-        'database' => 'horizonf_homeloan',
-        'username' => 'root',
+        'host' => 'localhost',
+        'port' => '1433',
+        'database' => 'forge',
+        'username' => 'forge',
         'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
@@ -376,22 +378,22 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\public\\storage',
-        'url' => 'http://localhost/storage',
+        'root' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\public\\storage',
+        'url' => '/storage',
         'visibility' => 'public',
       ),
       's3' => 
       array (
         'driver' => 's3',
-        'key' => '',
-        'secret' => '',
-        'region' => 'us-east-1',
-        'bucket' => '',
+        'key' => NULL,
+        'secret' => NULL,
+        'region' => NULL,
+        'bucket' => NULL,
         'url' => NULL,
         'endpoint' => NULL,
         'use_path_style_endpoint' => false,
@@ -399,7 +401,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\hfp_home_loan_new\\public\\storage' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\app/public',
+      'C:\\xampp\\htdocs\\Home_loan_CRM\\public\\storage' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -419,7 +421,7 @@
   'logging' => 
   array (
     'default' => 'stack',
-    'deprecations' => NULL,
+    'deprecations' => 'null',
     'channels' => 
     array (
       'stack' => 
@@ -434,13 +436,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -450,7 +452,7 @@
         'url' => NULL,
         'username' => 'Laravel Log',
         'emoji' => ':boom:',
-        'level' => 'debug',
+        'level' => 'critical',
       ),
       'papertrail' => 
       array (
@@ -492,12 +494,12 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\logs/laravel.log',
       ),
       'whatsapp' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\logs/whatsapp.log',
+        'path' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\logs/whatsapp.log',
         'level' => 'debug',
       ),
     ),
@@ -510,9 +512,9 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'mailhog',
-        'port' => '1025',
-        'encryption' => NULL,
+        'host' => 'smtp.mailgun.org',
+        'port' => 587,
+        'encryption' => 'tls',
         'username' => NULL,
         'password' => NULL,
         'timeout' => NULL,
@@ -556,14 +558,14 @@
     'from' => 
     array (
       'address' => 'hello@example.com',
-      'name' => 'Laravel',
+      'name' => 'Example',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\Home_loan_CRM\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -648,8 +650,8 @@
       'sqs' => 
       array (
         'driver' => 'sqs',
-        'key' => '',
-        'secret' => '',
+        'key' => NULL,
+        'secret' => NULL,
         'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
         'queue' => 'default',
         'suffix' => NULL,
@@ -682,7 +684,6 @@
       2 => '127.0.0.1',
       3 => '127.0.0.1:8000',
       4 => '::1',
-      5 => 'localhost',
     ),
     'guard' => 
     array (
@@ -709,18 +710,18 @@
     ),
     'ses' => 
     array (
-      'key' => '',
-      'secret' => '',
+      'key' => NULL,
+      'secret' => NULL,
       'region' => 'us-east-1',
     ),
   ),
   'session' => 
   array (
     'driver' => 'file',
-    'lifetime' => '120',
+    'lifetime' => 120,
     'expire_on_close' => true,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -760,9 +761,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\Home_loan_CRM\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\hfp_home_loan_new\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\Home_loan_CRM\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -837,7 +838,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\xampp\\htdocs\\hfp_home_loan_new',
+    'remote_sites_path' => 'C:\\xampp\\htdocs\\Home_loan_CRM',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

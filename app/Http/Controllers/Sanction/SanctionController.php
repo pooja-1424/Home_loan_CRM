@@ -86,7 +86,7 @@ class SanctionController extends Controller
      {
          /* restrict users to create data except admin and team leader  */
          if (!Auth::user()->hasRole(['Admin', 'team leader'])) // && $userId != Auth::id())
-         {
+        {
             $fields = ['tbl_hlclients.*'];
             $results = $this->sanctionFilterQuery($fields);
             $getResArr = $results->pluck('client_id')->toArray();
@@ -104,8 +104,7 @@ class SanctionController extends Controller
      }
 
     public function store(Request $request)
-    {
-        // dd($request->all());
+    {        
         $request->validate([
             
             'client_id' => 'required',

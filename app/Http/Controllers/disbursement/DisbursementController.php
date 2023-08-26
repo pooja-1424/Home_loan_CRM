@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\disbursement;
+use App\Services\DataStorageService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
@@ -10,15 +11,21 @@ use App\Models\disbursement\Disbursement;
 use App\Models\contact\Contact;
 use App\Models\comment\Comment;
 use App\helpers\commentHelper as helper;
+use App\Models\Home_loan_incentive;
+use App\Models\TelecallerIncentive;
+use App\Models\User;
 
 class DisbursementController extends Controller
 {
-  function __construct()
+  protected $dataStorageService;   
+   
+    function __construct(DataStorageService $dataStorageService) 
   {
     $this->middleware('permission:disbursement-list|disbursement-create|disbursement-edit|disbursement-delete', ['only' => ['index','show']]);
     $this->middleware('permission:disbursement-create', ['only' => ['create','store']]);
     $this->middleware('permission:disbursement-edit', ['only' => ['edit','update']]);
     $this->middleware('permission:disbursement-delete', ['only' => ['destroy']]);
+    $this->dataStorageService = $dataStorageService;
   }    
 
   public function disbFilterQuery($fields = [], $conditions = [], $joins = [])
@@ -225,7 +232,12 @@ class DisbursementController extends Controller
         }
         
         $disb_id = $model->save();
-      /* For Update sanction partial amount and update disbursement pending amount*/
+       
+        /*store disb_id*/
+        $tasks_controller = $this->dataStorageService->storeTelecallerData($request->all(),$model);
+        $tasks_controller = $this->dataStorageService->storeSMData($request->all(),$model);
+      
+        /* For Update sanction partial amount and update disbursement pending amount*/
       $sandata= Sanction::where('sanction_id',$request->sanction_id)->update(['disb_partial_amount'=> $result ]);
       $sandata1= Disbursement::where('sanction_id',$request->sanction_id)->update(['pending_disb'=> $pending_disb ]);
       $sandata2= Disbursement::where('sanction_id',$request->client_id)->update(['status'=>$status]);
@@ -298,6 +310,10 @@ class DisbursementController extends Controller
         }
         $model->LRT_amt = $request->LRT_amt;       
         $disb_id = $model->save();
+        
+        /*store disb_id*/
+        $tasks_controller = $this->dataStorageService->storeTelecallerData($request->all(),$model);
+        $tasks_controller = $this->dataStorageService->storeSMData($request->all(),$model);
         /* For Update sanction partial amount and update disbursement pending amount*/
         $sandata= Sanction::where('sanction_id',$request->sanction_id)->update(['disb_partial_amount'=> $result ]);
         $sandata1= Disbursement::where('sanction_id',$request->sanction_id)->update(['pending_disb'=> $pending_disb ]);
@@ -410,6 +426,15 @@ class DisbursementController extends Controller
 
   public function update(Request $request, Disbursement $disbursement)
   {   
+    if ($request->disb_date) 
+    {
+      $model = new Contact(); 
+      
+      $data = $request->all();
+      $data['disb_id'] = $disbursement->disb_id; // Adding the primary key
+      
+      $tasks_controller = $this->dataStorageService->updateDate($data, $model); 
+    }
       $pending_disb=$request->pending_disb;
       $sanction_id=$request->sanction_id;
       /*select disbursement Heighest ID*/

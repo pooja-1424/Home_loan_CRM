@@ -13,15 +13,20 @@ use App\Rules\MobileNumberValidator;
 use App\Models\User;
 use App\Models\Bankname;
 use Auth;
+use App\Services\DataStorageService;
 
 class ContactController extends Controller
 {
-    public function __construct()
+  protected $dataStorageService;   
+   
+    function __construct(DataStorageService $dataStorageService)     
+    
     {
       $this->middleware('permission:contact-list|contact-create|contact-edit|contact-delete', ['only' => ['index','store']]);
       $this->middleware('permission:contact-create', ['only' => ['create','store']]);
       $this->middleware('permission:contact-edit', ['only' => ['edit','update']]);
       $this->middleware('permission:contact-delete', ['only' => ['destroy']]);
+      $this->dataStorageService = $dataStorageService;
     }
 
     public function index(Contact $contact)
@@ -180,7 +185,8 @@ class ContactController extends Controller
 
       $data=Contact::findorfail($contact->client_id);
       $data1=$data->tbl_hlsanction;
-      $data2=$data->tbl_hldisbursement;     
+      $data2=$data->tbl_hldisbursement;  
+         
       $comData=Contact::findorfail($contact->client_id);
       $comData1=$comData->tbl_hlcomments;
       $comment = Comment::where('client_id', $contact->client_id)->orderBy('comment_id', 'desc')->get();
@@ -271,6 +277,43 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
+      if($request->Assigned_To)
+      {    
+        $model=new Contact();    
+        $assignedTo = $request->Assigned_To;                   
+        $names = explode(' ', $assignedTo);           
+        $user = User::select('user_id')
+            ->where('firstname', $names[0])
+            ->where('lastname', $names[1])
+            ->first();             
+      
+       $tasks_controller = $this->dataStorageService->updateTelecallerData($request->all(),$model);   
+      }
+
+      if($request->lead_source_sm)
+      {
+        $leadSourceSMName = $request->lead_source_sm;              
+        $names = explode(' ', $leadSourceSMName);           
+        $user = User::select('user_id')
+            ->where('firstname', $names[0])
+            ->where('lastname', $names[1])
+            ->first();               
+  
+       $tasks_controller = $this->dataStorageService->updateSMData($request->all(),$model); 
+      }
+
+      if($request->lead_source_TL)
+      {
+        $leadSourceTLName = $request->lead_source_TL; 
+        $names = explode(' ', $leadSourceTLName);           
+        $user = User::select('user_id')
+            ->where('firstname', $names[0])
+            ->where('lastname', $names[1])
+            ->first();              
+      
+       $tasks_controller = $this->dataStorageService->updateTLData($request->all(),$model); 
+      }
+
       $request->validate
        ([
         'fname'=>'required|regex:/^[a-zA-Z]+$/u|max:255',
@@ -282,8 +325,7 @@ class ContactController extends Controller
         'Lead_source'=>'required',
         'Tracking_Status'=>'required',
         'Tracking_Status_Sub'=>'required',
-        'Assigned_To'=>'required',
-            
+        'Assigned_To'=>'required',            
         'lead_source_details'=>'required',
         'Property_Phase_Requirement'=>'',
 
@@ -299,9 +341,10 @@ class ContactController extends Controller
         'lname.regex'=>'The Format is Invalid',        
       ]);   
       $data = $request->all();
+
       $data['Interested_bank'] = isset($data['Interested_bank']) ? implode(',', $data['Interested_bank']) : null;//store bank name
-        $contact->update($data);       
-        return redirect()->route('contacts.index')
+      $contact->update($data);       
+      return redirect()->route('contacts.index')
                         ->with('success','updated successfully');
     }  
   

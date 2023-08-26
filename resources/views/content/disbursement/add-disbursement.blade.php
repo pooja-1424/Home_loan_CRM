@@ -135,6 +135,7 @@
                                       <option  value="Cancelled" {{ old('status') == "Cancelled" ? 'selected' : '' }}>Cancelled</option> 
                                       <option  value="Reject" {{ old('status') == "Reject" ? 'selected' : '' }}>Reject</option> 
                                       <option  value="Not_Disbursed" {{ old('status') == "Not_Disbursed" ? 'selected' : '' }}>Not Disbursed</option> 
+                                      <option  value="first_disbursement" {{ old('status') == "first_disbursement" ? 'selected' : '' }}>First Disbursement</option> 
                                   </select>
                               @error('status')
                                   <div style="color: red" class="error-msg">{{ $message }}</div>
